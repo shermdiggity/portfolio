@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Open Graph card source</title>
+<!--
+  Source for assets/og.png (1200x630). It reuses the site's real stylesheet and
+  the real field renderer, so the card can never drift from the site.
+  Regenerate with:  node tools/og.mjs
+-->
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  .card {
+    position: relative; z-index: 1;
+    width: 1200px; height: 630px;
+    display: grid; place-items: center;
+  }
+  .og-sheet {
+    width: 760px;
+    padding: 58px 64px 54px;
+    background-color: var(--paper);
+    clip-path: polygon(0 0, calc(100% - 54px) 0, 100% 54px, 100% 100%, 0 100%);
+  }
+  .og-wrap { filter: drop-shadow(0 3px 3px rgba(20,14,6,.3)) drop-shadow(0 22px 36px rgba(20,14,6,.26)); }
+  .og-name { font-family: var(--display); font-weight: 400; font-size: 78px; line-height: 1; letter-spacing: -.01em; margin: 0; }
+  .og-tag { margin: 16px 0 0; font-size: 21px; color: var(--ink-mute); }
+  .og-role {
+    margin: 30px 0 0; padding-top: 20px; border-top: 1px solid var(--rule-soft);
+    font-family: var(--display); font-size: 16px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink);
+  }
+</style>
+</head>
+<body>
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="card">
+  <div class="og-wrap">
+    <div class="og-sheet">
+      <p class="og-name">Cole Sherman</p>
+      <p class="og-tag">working my way out of the Dunning-Kruger valley</p>
+      <p class="og-role">iOS engineer &middot; TikTok Subscriptions</p>
+    </div>
+  </div>
+</div>
+<script src="../main.js"></script>
+</body>
+</html>

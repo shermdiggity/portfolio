@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cole Sherman</title>
+<meta name="description" content="Cole Sherman is an iOS engineer working on TikTok's Subscriptions product, shipping performant product features and revenue-critical code.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0F0E0C">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cole Sherman">
+<meta property="og:description" content="iOS engineer. TikTok Subscriptions. Working my way out of the Dunning-Kruger valley.">
+<meta property="og:image" content="assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Gambarino-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- The signature: a slowly-drifting flat-colour poster field. Painted at a
+     coarse cell grid and upscaled with image-rendering:pixelated, so the hard
+     posterised edges are the point rather than an artefact. If this never
+     paints, --ground shows through and the sheet still reads correctly. -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<main class="stage">
+  <article class="sheet">
+
+    <header class="masthead">
+      <h1 class="name">Cole Sherman</h1>
+      <p class="tagline">working my way out of the Dunning-Kruger valley</p>
+    </header>
+
+    <nav class="tabs" aria-label="Sections">
+      <a class="tab" href="#about" data-tab="about">About</a>
+      <a class="tab" href="#work" data-tab="work">Work</a>
+      <a class="tab" href="#projects" data-tab="projects">Projects</a>
+      <a class="tab" href="#contact" data-tab="contact">Contact</a>
+      <span class="tabs-marker" aria-hidden="true" hidden></span>
+    </nav>
+
+    <div class="panels">
+
+      <section class="panel" id="about" data-panel="about">
+        <h2 class="sr-only">About</h2>
+
+        <p><b>I&rsquo;m an iOS engineer with experience shipping performant product
+        features and revenue-critical code to over a billion users</b>. Currently, I
+        work on TikTok&rsquo;s Subscriptions product shipping the features people pay
+        for, and the payment and entitlement systems that power the experience for
+        creators and consumers alike. I&rsquo;ve owned features from planning through
+        delivery, and proposed and led performance initiatives that raised purchase
+        rates and produced meaningful business output. In my free time I build side
+        projects end to end where I write the client, the backend, and everything in
+        between.</p>
+
+        <p><b>When I&rsquo;m away from the computer</b>, you can find me skiing, adding
+        to my slowly outgrowing record shelf, watching &amp; playing sports, or doing
+        the New York Times crossword.</p>
+
+        <ul class="plates">
+          <li class="plate"><img src="assets/photos/lake.webp" width="275" height="366"
+            alt="Cole on a wooded deck above a lake at golden hour." loading="lazy" decoding="async"></li>
+          <li class="plate"><img src="assets/photos/stadium.webp" width="366" height="264"
+            alt="Friends together in the stands at a night football game."
+            style="object-position:100% 50%" loading="lazy" decoding="async"></li>
+          <li class="plate"><img src="assets/photos/ski.webp" width="169" height="366"
+            alt="Skiing through soft snow on a sunlit slope." loading="lazy" decoding="async"></li>
+        </ul>
+      </section>
+
+      <section class="panel" id="work" data-panel="work">
+        <h2 class="sr-only">Work</h2>
+
+        <ol class="roles">
+          <li class="role">
+            <p class="role-title"><strong>iOS Software Engineer</strong>, TikTok</p>
+            <p class="role-when"><time datetime="2025-01">since January 2025</time></p>
+            <p class="role-note">first &ldquo;big boy job&rdquo; after graduating WashU in May 2024
+            and taking some time off for travel and recharge. shipping features for the
+            Subscriptions product, leading &amp; landing performance optimization projects,
+            and ensuring stability for a $XXm/quarter (and growing) business through robust
+            A/B testing, event monitoring, and code review.</p>
+            <p class="role-stack">swift &middot; objective-c &middot; swiftui &middot; uikit &middot; bazel &middot; git</p>
+          </li>
+          <li class="role">
+            <p class="role-title"><strong>Mobile (iOS) Engineer Intern</strong>, Spotify</p>
+            <p class="role-when"><time datetime="2023-06">summer 2023</time></p>
+            <p class="role-note">worked on the profile team shipping features to increase
+            inter-user engagement and profile traffic. shipped profile sharing functionality
+            to 100% of users, wrote backend service to return shared user Blends, contributed
+            to general bugfixes &amp; upkeep</p>
+            <p class="role-stack">swift &middot; java &middot; uikit &middot; bazel &middot; unit testing &middot; snapshot testing &middot; git</p>
+          </li>
+          <li class="role">
+            <p class="role-title"><strong>iOS Intern</strong>, EyeLabs.AI</p>
+            <p class="role-when"><time datetime="2023-01">winter through spring 2023</time></p>
+            <p class="role-note">designed &amp; implemented custom UI components and
+            user-friendly search flow for the IOL Reference iOS app, allowing optical surgeons
+            to quickly search for FDA-approved, currently marketed intraocular lenses that meet
+            their needs and specifications. optimized data storage strategy to significantly
+            reduce db size and ensure seamless client integration</p>
+            <p class="role-stack">swift &middot; swiftui &middot; firebase &middot; git</p>
+          </li>
+        </ol>
+
+        <!-- Becomes a real link once LINKS.resume is set in main.js. Until then it
+             renders as plain text rather than a button that does nothing. -->
+        <p class="aside"><span data-link="resume">Full r&eacute;sum&eacute; (PDF)</span></p>
+      </section>
+
+      <section class="panel" id="projects" data-panel="projects">
+        <h2 class="sr-only">Projects</h2>
+
+        <!-- Placeholder copy carried over from the design. Replace the names and
+             blurbs here, and add hrefs in LINKS.projects in main.js. -->
+        <ul class="projects">
+          <li class="project">
+            <p class="project-name"><span data-link="project-1">Project One</span></p>
+            <p class="project-note">what it does, in one clause.</p>
+          </li>
+          <li class="project">
+            <p class="project-name"><span data-link="project-2">Project Two</span></p>
+            <p class="project-note">what it does, in one clause.</p>
+          </li>
+          <li class="project">
+            <p class="project-name"><span data-link="project-3">Project Three</span></p>
+            <p class="project-note">what it does, in one clause.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="panel" id="contact" data-panel="contact">
+        <h2 class="sr-only">Contact</h2>
+
+        <ul class="contacts">
+          <li><a href="mailto:cole.b.sherman@gmail.com">cole.b.sherman@gmail.com</a></li>
+          <li><span data-link="github">GitHub</span></li>
+          <li><span data-link="linkedin">LinkedIn</span></li>
+        </ul>
+      </section>
+
+    </div>
+
+    <footer class="colophon">
+      <p class="copyright">&copy; <span data-year>2026</span> Cole Sherman</p>
+
+      <div class="field-picker" hidden>
+        <span class="field-picker-label">field</span>
+        <div class="swatches" role="group" aria-label="Background palette"></div>
+      </div>
+    </footer>
+
+  </article>
+</main>
+
+<script src="main.js" defer></script>
+</body>
+</html>

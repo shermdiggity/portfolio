@@ -1,0 +1,442 @@
+/* ============================================================================
+   Cole Sherman, portfolio
+   One sheet of paper, trimmed at one corner, resting on a slowly drifting
+   flat-colour poster field. The field is loud; the sheet is quiet. They meet
+   in the ochre/amber family, which is the only accent either one uses.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Gambarino";
+  src: url("assets/fonts/Gambarino-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Ink: every step below clears 4.5:1 on --paper. */
+  --ink:        #1A1815;
+  --ink-soft:   #4A4642;
+  --ink-mute:   #6B6560;
+
+  --paper:      #FCFAF6;
+  --rule-soft:  rgba(26, 24, 21, 0.08);
+
+  /* The one accent, and it is tonal: a deep, low-chroma amber, never a
+     poster-bright fill. The bright colour all lives in the field outside. */
+  --amber:      #7D5411;
+  --amber-deep: #5A3B0A;
+  --amber-wash: #FFE3BF;
+  --amber-track: rgba(125, 84, 17, 0.22);
+
+  /* Shows through before/behind the canvas, so the sheet always has a ground. */
+  --ground:     #0F0E0C;
+
+  --display: "Gambarino", "Iowan Old Style", Palatino, Georgia, serif;
+  --text: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --chamfer: clamp(24px, 5vw, 46px);
+  --sheet-pad-x: clamp(24px, 6vw, 72px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 16.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--amber-wash); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+
+/* the field ----------------------------------------------------------- */
+
+#field {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  /* Chunky cells are the aesthetic, so never let the upscale smooth them. */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* the sheet ----------------------------------------------------------- */
+
+.stage {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin-inline: auto;
+  padding-inline: clamp(18px, 4vw, 26px);
+  /* On the wrapper, not the sheet: filter is applied before clip-path, so a
+     shadow set on the sheet itself would be generated from the untrimmed box
+     and then clipped away with the corner. Cast from one direction, tinted to
+     the ground rather than black, and tight enough to read as contact. */
+  filter:
+    drop-shadow(0 2px 2px rgba(20, 14, 6, 0.28))
+    drop-shadow(0 18px 30px rgba(20, 14, 6, 0.24));
+}
+
+.sheet {
+  position: relative;
+  /* A deliberate band of field above the sheet, so the signature still reads
+     on a phone where the sheet otherwise fills the screen edge to edge. */
+  margin-top: clamp(52px, 8vw, 74px);
+  margin-bottom: clamp(32px, 6vw, 64px);
+  padding: clamp(34px, 6.5vw, 76px) var(--sheet-pad-x) clamp(30px, 5vw, 52px);
+
+  background-color: var(--paper);
+  /* Grain sits in the substrate, behind every glyph on the page. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+
+  /* The bespoke silhouette: one trimmed corner, like a filing card. Every
+     block below keeps its content well clear of the cut. */
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer)) 0,
+    100% var(--chamfer),
+    100% 100%,
+    0 100%
+  );
+}
+
+/* masthead ------------------------------------------------------------ */
+
+.masthead {
+  /* Reserve the trimmed corner so a long name can never run into the cut. */
+  padding-right: calc(var(--chamfer) * 0.5);
+}
+
+.name {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(38px, 7.4vw, 54px);
+  line-height: 1.0;
+  letter-spacing: -0.008em;
+  margin: 0;
+}
+
+.tagline {
+  margin: 10px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+
+/* tabs ---------------------------------------------------------------- */
+
+.tabs {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  /* The row gap has to clear the marker, which sits under whichever row the
+     active tab is on once the tabs wrap. */
+  gap: 13px clamp(18px, 4.6vw, 30px);
+  margin: clamp(26px, 4vw, 34px) 0 clamp(26px, 4vw, 32px);
+  /* Tinted into the marker's own family rather than left neutral: the rule is
+     the track the marker runs along, so the two read as one component. */
+  border-bottom: 1px solid var(--amber-track);
+}
+
+.tab {
+  padding: 0 0 12px;
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); }
+
+/* Rounded caps, and it travels the full track between tabs, never a
+   square-capped rule that grows out of nothing. */
+.tabs-marker {
+  position: absolute;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--amber);
+  pointer-events: none;
+  transition:
+    left 400ms cubic-bezier(0.22, 0.9, 0.24, 1),
+    width 400ms cubic-bezier(0.22, 0.9, 0.24, 1),
+    top 220ms cubic-bezier(0.22, 0.9, 0.24, 1);
+}
+
+.tabs-marker[hidden] { display: none; }
+
+/* panels -------------------------------------------------------------- */
+
+/* Enough that a short panel never leaves the sheet looking truncated, not so
+   much that it leaves a hole under one. */
+.panels { min-height: 240px; }
+
+.panel { margin: 0; }
+
+/* Only while JS has not taken the tabs over: every panel is on the page, so
+   the sections need real separation. Once tabs are live this never applies. */
+.panels:not([data-tabs]) .panel + .panel {
+  margin-top: 38px;
+  padding-top: 30px;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.panels[data-tabs] .panel:not(.is-active) { display: none; }
+.panel:focus, .panel:focus-visible { outline: none; }
+
+.panel > p { margin: 0 0 15px; }
+.panel > p:last-child { margin-bottom: 0; }
+.panel b, .panel strong { font-weight: 600; color: var(--ink); }
+
+a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+a:hover { color: var(--amber-deep); }
+
+/* Where a real URL has not been supplied yet, the label stays plain text
+   rather than becoming a control that answers nothing. */
+[data-link] { color: var(--ink); }
+
+/* about: the photo strip ---------------------------------------------- */
+
+.plates {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 1.6vw, 13px);
+  margin: 22px 0 0;
+  padding: 0;
+}
+
+.plate {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: #E7E2D8;
+  /* A self-coloured edge rather than a drawn hairline: the paper's own tone,
+     a step darker, so you feel a lip instead of seeing an outline. */
+  box-shadow: inset 0 0 0 1px rgba(26, 24, 21, 0.10);
+}
+
+.plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  display: block;
+  /* The image moves inside a fixed frame. The card itself never lifts. */
+  transition: transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.plate:hover img { transform: scale(1.045); }
+
+/* work ---------------------------------------------------------------- */
+
+.roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.role {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 24px;
+  align-items: baseline;
+}
+
+.role-title { margin: 0; font-size: 16.5px; line-height: 1.4; }
+
+.role-when {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.role-note {
+  grid-column: 1 / -1;
+  margin: 5px 0 0;
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--ink-soft);
+}
+
+.role-stack {
+  grid-column: 1 / -1;
+  margin: 7px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+
+.panel > .aside { margin: 26px 0 0; font-size: 14.5px; }
+
+/* projects ------------------------------------------------------------ */
+
+.projects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-name { margin: 0; font-size: 16.5px; line-height: 1.4; }
+.project-note { margin: 3px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-soft); }
+
+/* contact ------------------------------------------------------------- */
+
+.contacts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 16.5px;
+}
+
+/* colophon ------------------------------------------------------------ */
+
+.colophon {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 20px;
+  position: relative;
+  margin-top: clamp(34px, 5vw, 46px);
+  padding-top: 24px;
+  font-size: 12.5px;
+  color: var(--ink-mute);
+}
+
+/* The tab marker opens the sheet; this closes it. Same bar, same colour, same
+   rounded caps, so the one mark reads as the site's own rather than as a
+   default divider dropped in to fake structure. */
+.colophon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--amber);
+}
+
+.copyright { margin: 0; }
+
+.field-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.field-picker[hidden] { display: none; }
+
+/* Lowercase and in the body face, deliberately not the tracked caps the
+   tabs wear, so the two small labels do not read as one costume. */
+.field-picker-label { color: var(--ink-mute); }
+
+.swatches { display: flex; align-items: center; gap: 7px; }
+
+.swatch {
+  appearance: none;
+  display: block;
+  position: relative;
+  width: 38px;
+  height: 13px;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    var(--s1) 0 33.333%,
+    var(--s2) 33.333% 66.666%,
+    var(--s3) 66.666% 100%
+  );
+  opacity: 0.5;
+  transition: opacity 180ms ease;
+}
+
+/* Expands the touch target well past the 13px-tall chip without changing the
+   layout or the shape the selection outline traces. */
+.swatch::after {
+  content: "";
+  position: absolute;
+  inset: -14px -3px;
+}
+
+.swatch:hover { opacity: 0.82; }
+
+.swatch[aria-pressed="true"] {
+  opacity: 1;
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.swatch:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+/* narrow screens ------------------------------------------------------ */
+
+@media (max-width: 560px) {
+  .role { grid-template-columns: 1fr; }
+  .role-when { margin-top: 2px; }
+  .colophon { justify-content: flex-start; }
+  /* The reserve that keeps the sheet from jumping between tabs is worth far
+     less on a phone than the dead space it leaves under a short panel. */
+  .panels { min-height: 180px; }
+}
+
+@media (max-width: 380px) {
+  body { font-size: 16px; }
+  .panel p { margin-bottom: 13px; }
+}
+
+/* reduced motion ------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .plate:hover img { transform: none; }
+}
