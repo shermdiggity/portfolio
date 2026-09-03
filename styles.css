@@ -56,6 +56,9 @@ a:hover { color: #a06f24; }
 .root {
   position: relative;
   min-height: 100vh;
+  /* The small viewport, so a phone's collapsing URL bar cannot leave the card
+     centred against space that is not on screen. */
+  min-height: 100dvh;
   font-family: var(--font-body);
   color: var(--color-text);
 }
@@ -70,11 +73,22 @@ a:hover { color: #a06f24; }
   image-rendering: pixelated;
 }
 
+/* .root is a flex column and main takes `margin: auto`, which centres the card
+   on both axes. Auto margins are used rather than justify-content because they
+   never resolve negative: once the card is taller than the viewport they fall
+   to 0, the article's own 64px margins take over, and the top of the card can
+   still be scrolled to. */
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
 main {
   position: relative;
   z-index: 1;
+  width: 100%;
   max-width: 760px;
-  margin: 0 auto;
+  margin: auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
