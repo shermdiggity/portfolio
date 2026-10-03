@@ -189,6 +189,13 @@ function startTabs() {
     b.addEventListener('click', function () { show(b.dataset.tab); });
   });
 
+  document.querySelectorAll('a[data-tab]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      show(a.dataset.tab);
+    });
+  });
+
   show('about');
 }
 
